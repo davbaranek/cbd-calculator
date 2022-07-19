@@ -1,9 +1,16 @@
-//CONSTANTS
-//Strength of CBD for different problems
-// 0 = low
-// 1 = low - mid based on experience
-// 2 = mid - high based on experience
-// 3 = high
+/**
+ * 
+ * CONSTANTS
+ * 
+ */
+
+/**
+ * Strength of CBD for different problems
+ * 0 = low
+ * 1 = low - mid based on experience
+ * 2 = mid - high based on experience
+ * 3 = high
+ */
 
 const problems_strength_const = [
   ["health", 0],
@@ -33,13 +40,42 @@ const weight_dosing_kg_const = {
 
 const const_mg_dose = 0.5;
 
-document.getElementById("myWeight-change").innerHTML = document.getElementById("myWeight").value;
-document.getElementById("cbdPerc-change").innerHTML = document.getElementById("cbdPerc").value;
+/**
+ * 
+ * END OF CONSTANTS
+ * 
+ */
+
+// Numbers of sliders
+
+const myWeight_change = document.getElementById("myWeight-change");
+const cbdPerc_change = document.getElementById("cbdPerc-change");
+
+// Sliders
+
+const myWeight = document.getElementById("myWeight");
+const cbdPerc = document.getElementById("cbdPerc");
+
+myWeight_change.innerHTML = myWeight.value;
+cbdPerc_change.innerHTML = cbdPerc.value;
+
+
+const experience_true = document.getElementById("experience_true"); // Experience Switcher
+const reason_checkbox = document.getElementsByClassName("reason_checkbox"); // Reason Checkbox
+
+/**
+ * 
+ * BUTTONS
+ * 
+ */
+
 
 const submit_button = document.getElementById("app_submit_button");
 const reset_button = document.getElementById("reset_button");
 
-// SAVE BUTTON ///
+/**
+* Function to handle Submit button
+*/
 
 submit_button.onclick = function () { 
   let user_choice = {
@@ -48,35 +84,44 @@ submit_button.onclick = function () {
 
   //Save values to the object
 
-  user_choice.experience = document.getElementById("experience_true").checked ? true : false;
-  user_choice.weight = document.getElementById("myWeight").value;
-  user_choice.product = document.getElementById("cbdPerc").value;
+  user_choice.experience = experience_true.checked ? true : false;
+  user_choice.weight = myWeight.value;
+  user_choice.product = cbdPerc.value;
   for (let i = 0; i < 13; i++) {
-      if (document.getElementsByClassName("reason_checkbox")[i].checked) {
-        user_choice.reason.push(document.getElementsByClassName("reason_checkbox")[i].value);
+      if (reason_checkbox[i].checked) {
+        user_choice.reason.push(reason_checkbox[i].value);
       }
    }
 
-   user_results = getResults(user_choice);
+   const user_results = getResults(user_choice);
 
-   //Write result
+   //Write results
+   writeResults(user_results.drops, user_results.mg, user_choice.product);
 
-   document.getElementById("result_drop").innerText = user_results.drops;
-   document.getElementById("result_mg").innerText = user_results.mg;
-   document.getElementById("result_product").innerText = user_choice.product;
-   document.getElementById("app_calculator").className += 'hidden';
-   document.getElementById("app_result").classList.remove("hidden");
-   document.getElementById("app_container").className += " app_container_result";
 };
 
-// RESET BUTTON //
+/**
+* Function to handle Reset button
+*/
 
 reset_button.onclick = function () {
    document.getElementById("app_result").className += 'hidden';
    document.getElementById("app_calculator").classList.remove("hidden");
    document.getElementById("app_container").classList.remove("app_container_result");
-
 };
+
+/**
+ * 
+ * END OF BUTTONS
+ * 
+ */
+
+
+/**
+* Function to handle Change of sliders
+* @param    {Number}     Value that has been changed
+* @param    {String}     ID of changed input      
+*/
 
 const sliderChange = function(value, id) {
   const slider = document.getElementById(id);
@@ -85,7 +130,11 @@ const sliderChange = function(value, id) {
   output.innerHTML = slider.value;
 }
 
-// CALCULATING CBD DOSE //
+/**
+* Function to calculate Strength based on the problem and const problems_strength_const
+* @param    {String}     A problem that the user entered 
+* @return   {Number}     Strength of CBD
+*/
 
 const calculateStrengthByProblem = function(user_choice) {
 
@@ -104,9 +153,14 @@ const calculateStrengthByProblem = function(user_choice) {
     return user_strength_prob;
 }
 
-const calculateStrengthByExperience = function(user_choice, firstStrength) {
+/**
+* Function to calculate Strength based on the experience of the user and problem of the user
+* @param    {Boolean}    Has user experience with CBD? 
+* @param    {String}     Strength of the CBD from the previous function  
+* @return   {Number}     Final strength of the CBD
+*/
 
-    //Define strength based on experience
+const calculateStrengthByExperience = function(user_choice, firstStrength) {
 
     let user_strength_final;
     if(firstStrength == 3) {
@@ -122,39 +176,69 @@ const calculateStrengthByExperience = function(user_choice, firstStrength) {
     return user_strength_final;
 }
 
-const calculateMg = function(weight, strength) {
-    //Calculate mg of CBD based on weight and strength
-    let user_mg;
+/**
+* Function to calculate miligrams of CBD per day based on the weight of the user and their experience
+* @param    {Number}     Weight in kilograms 
+* @param    {Number}     Strength of the CBD   
+* @return   {Number}     mg of CBD a user should have per day
+*/
 
+
+const calculateMg = function(weight, strength) {
     switch(strength) {
       case 1:
-        return (weight*0.2).toFixed(1);
+        return (weight*weight_dosing_kg_const.low).toFixed(1);
         break;
       case 2:
-        return (weight*0.6).toFixed(1);
+        return (weight*weight_dosing_kg_const.mid).toFixed(1);
         break;
       case 3:
-        return (weight*1.2).toFixed(1);
+        return (weight*weight_dosing_kg_const.high).toFixed(1);
         break;
     }
 }
 
+/**
+* Function to calculate number of drops based on mg of CBD per day and type of product
+* @param    {Number}     mg of CBD a user should take a day 
+* @param    {Number}     % of a user's product   
+* @return   {Number}     number of drops per day
+*/
+
 const calculateDrops = function(mg, product){
-  //Calculate drops of CBD 
   return Math.round(mg/(product*const_mg_dose));
 }
 
-
+/**
+* Function to return final results
+* @param    {object}     choices of the user from DOM 
+* @return   {object}     results (mg and drops)
+*/
 
 const getResults = function (user_choice) {
    const firstStrength =  calculateStrengthByProblem(user_choice.reason);
    const secondStrength = calculateStrengthByExperience(user_choice.experience, firstStrength);
    const user_mg = calculateMg(user_choice.weight, secondStrength);
-  const user_drops =  calculateDrops(user_mg, user_choice.product);
+   const user_drops =  calculateDrops(user_mg, user_choice.product);
 
     return {
       mg : user_mg,
       drops : user_drops
     };
+}
 
+/**
+* Function to handle DOM and write results to user
+* @param    {Number}     drops per day 
+* @param    {Number}     mg per day
+* @param    {Number}     type of the product
+*/
+
+const writeResults = function(drops, mg, product) {
+   document.getElementById("result_drop").innerText = drops;
+   document.getElementById("result_mg").innerText = mg;
+   document.getElementById("result_product").innerText = product;
+   document.getElementById("app_calculator").className += 'hidden';
+   document.getElementById("app_result").classList.remove("hidden");
+   document.getElementById("app_container").className += " app_container_result";
 }
