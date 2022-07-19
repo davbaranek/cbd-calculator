@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+<link href='css/cbd_style.css' rel='stylesheet'>
+</head>
+<body>
+  <div class="cbdcal-overlay">
+   
+  </div>
+<div class="container">
+<div class="logo">
+<img src="img/cbd_logo.png">
+</div>
+<div id="app_container" class="app_container">
+  <div>
+  <div id="app_result" class="hidden">
+     <h2>Your CBD dose is...</h2>
+    <p class="result_drop"><span id="result_drop"></span> drops</p>
+    <p class="app_description">of <span id="result_product"></span>% CBD oil per day</p>
+    <p class="app_description app_description_small">that means</p>
+    <p class="app_description"><span id="result_mg"></span> mg of CBD per day</p>
+    <button id="reset_button" class="app_button">Try again</button>
+  </div>
+  <div id="app_calculator">
+
+  <h2>Have you used CBD products before?</h2>
+
+    <ul class="radio_switcher_ul">
+      <li class="radio_switcher_li">
+        <input class="radio_switcher_input" type="radio" id="experience_false" name="toggle" checked>
+        <label for="experience_false">No, never</label>
+      </li>
+      <li class="radio_switcher_li">
+        <input class="radio_switcher_input" type="radio" id="experience_true" name="toggle">
+        <label for="experience_true">Yes, I have</label>
+        <div aria-hidden="true" class="radio_switcher_marker"></div>
+      </li>
+    </ul>
+
+    <h2 class="line_up">What is your weight?</h2>
+
+ <div class="slider_div">
+  <p>I weight <span id="myWeight-change"></span> kg</p>
+  <input type="range" min="30" max="200" value="75" class="slider" id="myWeight" oninput="sliderChange(this.value, 'myWeight');">
+</div>
+
+    <h2 class="line_up">What CBD oil do you own?</h2>
+
+<div class="slider_div">
+  <p>My CBD oil is <span id="cbdPerc-change"></span> %</p>
+  <input type="range" min="2.5" max="30" step="2.5" value="5" class="slider" id="cbdPerc" oninput="sliderChange(this.value, 'cbdPerc');">
+</div>
+
+<div class="checkboxes_div">
+  <h2 class="line_up">Why do you take CBD?</h2>
+  <h6>(You can choose more options)</h6>
+  <div>
+  <input type="checkbox" id="health" class="reason_checkbox" value="health">
+  <label class="reason_label" for="health">Health in general</label>
+  </div>
+
+   <div>
+   <input type="checkbox" id="head_pain" class="reason_checkbox" value="head_pain">
+   <label class="reason_label" for="head_pain">Head pain</label>
+   </div>
+
+   <div>
+   <input type="checkbox" id="muscle" class="reason_checkbox" value="muscle">
+   <label class="reason_label" for="muscle">Muscle regeneration</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="menstrual" value="menstrual">
+   <label class="reason_label" for="menstrual">Menstrual pain</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="arthritis" value="arthritis">
+   <label class="reason_label" for="arthritis">Arthritis</label>
+   </div>
+
+    <div>
+   <input type="checkbox" class="reason_checkbox" id="bloodpressure" value="bloodpressure">
+   <label class="reason_label" for="bloodpressure">High blood pressure</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="depression" value="depression">
+   <label class="reason_label" for="depression">Depression and anxiety</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="sclerosis" value="sclerosis">
+   <label class="reason_label" for="sclerosis">Multiple sclerosis</label>
+   </div>
+
+    <div>
+   <input type="checkbox" class="reason_checkbox" id="pain" value="pain">
+   <label class="reason_label" for="pain">Chronic pain</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="sleep" value="sleep">
+   <label class="reason_label" for="sleep">Sleep disorders</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="schizophrenia" value="schizophrenia">
+   <label class="reason_label" for="schizophrenia">Schizophrenia</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="epilepsy" value="epilepsy">
+   <label class="reason_label" for="epilepsy">Epilepsy</label>
+   </div>
+
+   <div>
+   <input type="checkbox" class="reason_checkbox" id="cancer" value="cancer">
+   <label class="reason_label" for="cancer">Cancer</label>
+   </div>
+</div>
+
+<div class="app_submit">
+  <button class="app_button" id='app_submit_button'>Calculate my CBD dose</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<script src="js/cbd_script.js"></script>
+</body>
+</html> 
