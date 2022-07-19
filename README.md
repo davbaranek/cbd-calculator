@@ -1,3 +1,5 @@
+![CBD Calculator design](https://i.ibb.co/bRTBF6R/CBD-titel.jpg)
+
 # CBD Calculator
 
 Finding how much CBD oil you should take per day is not that easy. 💦
@@ -13,3 +15,4 @@ Made with Vanilla Javascript, HTML and CSS. 💻
 And discuss it with your doctor.
 
 Bye. 👋
+
